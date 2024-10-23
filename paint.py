@@ -10,6 +10,7 @@ Exercises
 """
 
 from turtle import *
+from math import sqrt, pi, cos, sin
 
 from freegames import vector
 
@@ -38,7 +39,26 @@ def square(start, end):
 
 def circle(start, end):
     """Draw circle from start to end."""
-    pass  # TODO
+    radius = ((end.x - start.x) ** 2 + (end.y - start.y) ** 2) ** 0.5
+    
+    # Move to the starting point (the center of the circle)
+    up()
+    goto(start.x, start.y)
+    down()
+    begin_fill()
+
+    # Draw the circle as a series of small lines
+    steps = 360  # Number of steps to approximate the circle
+    angle_step = 2 * pi / steps  # Angle increment for each step
+
+    for i in range(steps):
+        angle = angle_step * i
+        x = start.x + radius * cos(angle)
+        y = start.y + radius * sin(angle)
+        goto(x, y)
+    
+    end_fill()
+    
 
 
 def rectangle(start, end):
@@ -79,6 +99,7 @@ onkey(lambda: color('white'), 'W')
 onkey(lambda: color('green'), 'G')
 onkey(lambda: color('blue'), 'B')
 onkey(lambda: color('red'), 'R')
+onkey(lambda: color('purple'), 'P')
 onkey(lambda: store('shape', line), 'l')
 onkey(lambda: store('shape', square), 's')
 onkey(lambda: store('shape', circle), 'c')
