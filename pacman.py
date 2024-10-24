@@ -131,6 +131,29 @@ def move():
     dot(20, 'yellow')
 
     for point, course in ghosts:
+        # Calcular dirección hacia Pacman
+        if abs(pacman - point) > 0:
+            diff = pacman - point
+            if abs(diff.x) > abs(diff.y):
+                # Mover en el eje X hacia Pacman
+                if valid(point + vector(5 if diff.x > 0 else -5, 0)):
+                    course.x = 5 if diff.x > 0 else -5
+                    course.y = 0
+                elif valid(point + vector(0, 5 if diff.y > 0 else -5)):
+                    # Si no es posible moverse en X, intentar moverse en Y
+                    course.x = 0
+                    course.y = 5 if diff.y > 0 else -5
+            else:
+                # Mover en el eje Y hacia Pacman
+                if valid(point + vector(0, 5 if diff.y > 0 else -5)):
+                    course.x = 0
+                    course.y = 5 if diff.y > 0 else -5
+                elif valid(point + vector(5 if diff.x > 0 else -5, 0)):
+                    # Si no es posible moverse en Y, intentar moverse en X
+                    course.x = 5 if diff.x > 0 else -5
+                    course.y = 0
+
+        # Mover el fantasma
         if valid(point + course):
             point.move(course)
         else:
