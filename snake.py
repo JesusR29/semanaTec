@@ -17,6 +17,8 @@ food = vector(0, 0)
 snake = [vector(10, 0)]
 aim = vector(0, -10)
 
+food_direction = vector(10, 0)
+
 
 def change(x, y):
     """Change snake direction."""
@@ -28,6 +30,17 @@ def inside(head):
     """Return True if head inside boundaries."""
     return -200 < head.x < 190 and -200 < head.y < 190
 
+def move_food():
+
+    global food_direction
+    next_position = food + food_direction
+
+    if not inside(next_position):
+        food_direction.x = randrange(-10, 11, 20)
+        food_direction.y = randrange(-10, 11, 20)
+
+    food.move(food_direction)
+    ontimer(move_food, 500)  # Llama a esta función cada 500 ms
 
 def move():
     """Move snake forward one segment."""
@@ -67,4 +80,5 @@ onkey(lambda: change(-10, 0), 'Left')
 onkey(lambda: change(0, 10), 'Up')
 onkey(lambda: change(0, -10), 'Down')
 move()
+move_food()
 done()
