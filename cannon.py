@@ -16,6 +16,7 @@ from freegames import vector
 ball = vector(-200, -200)
 speed = vector(0, 0)
 targets = []
+target_distance = 0
 
 
 def tap(x, y):
@@ -29,7 +30,7 @@ def tap(x, y):
 
 def inside(xy):
     """Return True if xy within screen."""
-    return -200 < xy.x < 200 and -200 < xy.y < 200
+    return -210 < xy.x < 210 and -210 < xy.y < 210	
 
 
 def draw():
@@ -55,8 +56,8 @@ def move():
         targets.append(target)
 
     for target in targets:
-        target.x -= 0.5
-
+       target.x -= 0.5
+	
     if inside(ball):
         speed.y -= 0.35
         ball.move(speed)
@@ -72,8 +73,9 @@ def move():
 
     for target in targets:
         if not inside(target):
-            return
-
+            target.x = randrange(-50,50)
+            target.y = 199
+	
     ontimer(move, 50)
 
 
